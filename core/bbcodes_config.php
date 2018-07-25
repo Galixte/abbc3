@@ -25,6 +25,11 @@ class bbcodes_config
 	 */
 	public function pipes(Configurator $configurator)
 	{
+		if (!isset($configurator->BBCodes['pipes']))
+		{
+			return;
+		}
+
 		$configurator->plugins->load('PipeTables');
 
 		// Add class "pipe-table" to allow us to style the table with our CSS
@@ -44,11 +49,20 @@ class bbcodes_config
 	 */
 	public function bbvideo(Configurator $configurator)
 	{
-		foreach ($configurator->MediaEmbed->defaultSites as $tagName => $tag)
+		if (!isset($configurator->BBCodes['bbvideo']))
 		{
-			if (!isset($configurator->BBCodes[$tagName]))
+			return;
+		}
+
+		// If MediaEmbed is not already active (for example due to another ext) lets enable it
+		if (!isset($configurator->MediaEmbed) && !isset($configurator->BBCodes['MEDIA']))
+		{
+			foreach ($configurator->MediaEmbed->defaultSites as $tagName => $tag)
 			{
-				$configurator->MediaEmbed->add($tagName);
+				if (!isset($configurator->BBCodes[$tagName]))
+				{
+					$configurator->MediaEmbed->add($tagName);
+				}
 			}
 		}
 
@@ -70,6 +84,11 @@ class bbcodes_config
 	 */
 	public function hidden(Configurator $configurator)
 	{
+		if (!isset($configurator->BBCodes['hidden']))
+		{
+			return;
+		}
+
 		unset($configurator->BBCodes['hidden'], $configurator->tags['hidden']);
 		$configurator->BBCodes->addCustom(
 			'[hidden]{TEXT}[/hidden]',

@@ -39,9 +39,6 @@ class wizard
 	/** @var textformatter */
 	protected $textformatter;
 
-	/** @var string */
-	protected $ext_root_path;
-
 	/**
 	 * Constructor
 	 *
@@ -50,17 +47,15 @@ class wizard
 	 * @param request       $request       Request object
 	 * @param template      $template      Template object
 	 * @param textformatter $textformatter TextFormatter Factory
-	 * @param string        $ext_root_path Path to abbc3 extension root
 	 * @access public
 	 */
-	public function __construct(cache_driver $cache, helper $helper, request $request, template $template, textformatter $textformatter, $ext_root_path)
+	public function __construct(cache_driver $cache, helper $helper, request $request, template $template, textformatter $textformatter)
 	{
 		$this->cache = $cache;
 		$this->helper = $helper;
 		$this->request = $request;
 		$this->template = $template;
 		$this->textformatter = $textformatter;
-		$this->ext_root_path = $ext_root_path;
 	}
 
 	/**
@@ -102,7 +97,8 @@ class wizard
 			$configurator = $this->textformatter->get_configurator();
 			foreach ($configurator->MediaEmbed->defaultSites as $siteId => $siteConfig)
 			{
-				if (!isset($configurator->BBCodes[$siteId]))
+				// check that siteID is not already a custom bbcode and that it exists in MediaEmbed
+				if (!isset($configurator->BBCodes[$siteId]) && $configurator->tags->exists($siteId))
 				{
 					$bbvideo_sites[$siteId] = isset($siteConfig['example']) ? current((array) $siteConfig['example']) : '';
 				}

@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* Advanced BBCode Box [Spanish - Formal Honorifics]
+* Advanced BBCode Box [Spanish - Casual Honorifics]
 *
 * @copyright (c) 2013 Matt Friedman
 * @license GNU General Public License, version 2 (GPL-2.0)
@@ -68,7 +68,7 @@ $lang = array_merge($lang, array(
 	// Utility BBCodes
 	'ABBC3_COPY_BBCODE'			=> 'Copiar el texto seleccionado',
 	'ABBC3_PASTE_BBCODE'		=> 'Pegar el texto seleccionado',
-	'ABBC3_PASTE_ERROR'			=> 'Primero debe copiar un texto seleccionado, a continuación, péguelo',
+	'ABBC3_PASTE_ERROR'			=> 'Primero debes copiar un texto seleccionado, a continuación, pégalo',
 	'ABBC3_PLAIN_BBCODE'		=> 'Quitar todas las etiquetas BBCode del texto seleccionado',
 	'ABBC3_NOSELECT_ERROR'		=> 'No hay texto seleccionado.',
 
@@ -87,7 +87,7 @@ $lang = array_merge($lang, array(
 
 	// Pipe tables
 	'ABBC3_PIPE_TABLES'			=> 'Crear tablas',
-	'ABBC3_PIPE_TABLES_EXPLAIN'	=> 'Cree tablas usando cualquiera de estos formatos de estilo ASCII.',
+	'ABBC3_PIPE_TABLES_EXPLAIN'	=> 'Crea tablas usando cualquiera de estos formatos de estilo ASCII.',
 	'ABBC3_PIPE_DOCUMENTATION'	=> 'Guía de Usuario',
 	'ABBC3_PIPE_SIMPLE'			=> 'Tabla simple',
 	'ABBC3_PIPE_COMPACT'		=> 'Tabla compacta',
@@ -101,7 +101,7 @@ $lang = array_merge($lang, array(
 	// ACP
 	'ABBC3_BBCODE_ORDERED'		=> 'El orden de los BBCodes ha sido resincronizado.',
 	'ABBC3_BBCODE_GROUP'		=> 'Gestionar grupos que pueden utilizar este BBCode',
-	'ABBC3_BBCODE_GROUP_INFO'	=> 'Si ningún grupo es selecionado todos los usuarios podrán utilizar este BBCode.<br />Para selecionar (o eliminar la seleción) de multiples grupos simultaneamente, pulse CTRL+CLICK (o CMD-CLICK en Mac) sobre los grupos deseados. Si usted olvida mantener pulsada la tecla CTRL/CMD cuando hace clic en un grupo de usuarios, toda seleción previa sera eliminada.',
+	'ABBC3_BBCODE_GROUP_INFO'	=> 'Si ningún grupo es selecionado todos los usuarios podrán utilizar este BBCode.<br />Para selecionar (o eliminar la seleción) de multiples grupos simultaneamente, pulsa CTRL+CLICK (o CMD-CLICK en Mac) sobre los grupos deseados. Si olvidas mantener pulsada la tecla CTRL/CMD cuando haces clic en un grupo de usuarios, toda seleción previa sera eliminada.',
 
 	// BBCode FAQ
 	'ABBC3_FAQ_TITLE'			=> 'Advanced BBCode Box BBCodes',
