@@ -28,7 +28,9 @@ class ext_test extends \phpbb_test_case
 		parent::setUp();
 
 		// Stub the container
-		$this->container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
+		$this->container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\ContainerInterface')
+			->disableOriginalConstructor()
+			->getMock();
 
 		// Stub the ext finder and disable its constructor
 		$this->extension_finder = $this->getMockBuilder('\phpbb\finder')
@@ -73,10 +75,10 @@ class ext_test extends \phpbb_test_case
 
 		// Mocked container should return the config object
 		// when encountering $this->container->get('config')
-		$this->container->expects($this->any())
+		$this->container->expects($this->once())
 			->method('get')
 			->with('config')
-			->will($this->returnValue($config));
+			->willReturn($config);
 
 		/** @var \vse\abbc3\ext */
 		$ext = new \vse\abbc3\ext($this->container, $this->extension_finder, $this->migrator, 'vse/abbc3', '');

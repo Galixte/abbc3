@@ -62,14 +62,11 @@ class acp_bbcode_move_test extends acp_base
 	}
 
 	/**
-	* @dataProvider bbcode_move_data
-	*/
+	 * @dataProvider bbcode_move_data
+	 */
 	public function test_bbcode_move($item, $action, $expected)
 	{
-		global $user;
-		$user = new \phpbb_mock_user; // mock the user to prevent hhvm errors with generate_link_hash()
-
-		$this->request->expects($this->any())
+		$this->request->expects($this->exactly(2))
 			->method('variable')
 			->with($this->anything())
 			->will($this->returnValueMap(array(
@@ -114,15 +111,12 @@ class acp_bbcode_move_test extends acp_base
 	 */
 	public function test_bbcode_move_triggers_error($item, $action, $hash, $ajax, $errNo)
 	{
-		global $user;
-		$user = new \phpbb_mock_user; // mock the user to prevent hhvm errors with generate_link_hash()
-
-		$this->request->expects($this->any())
+		$this->request->expects($ajax? $this->once() : $this->never())
 			->method('is_ajax')
-			->will($this->returnValue($ajax))
+			->willReturn($ajax)
 		;
 
-		$this->request->expects($this->any())
+		$this->request->expects($this->exactly(2))
 			->method('variable')
 			->with($this->anything())
 			->will($this->returnValueMap(array(
