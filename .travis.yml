@@ -1,5 +1,5 @@
 language: php
-dist: trusty
+dist: xenial
 
 matrix:
   include:
@@ -15,14 +15,13 @@ matrix:
       env: DB=mysqli # MyISAM
     - php: 7.2
       env: DB=mysqli
-    - php: 7.2
-      env: DB=mysqli
     - php: 7.3
+      env: DB=mysqli
+    - php: 7.4snapshot
       env: DB=mysqli
     - php: nightly
       env: DB=mysqli
   allow_failures:
-    - php: 7.3
     - php: nightly
   fast_finish: true
 
@@ -43,8 +42,12 @@ branches:
     - /^develop-.*$/
     - /^\d+(\.\d+)?\.x$/
 
+services:
+  - postgresql
+  - mysql
+
 install:
-  - travis/prepare-phpbb.sh $EXTNAME $PHPBB_BRANCH
+  - travis/prepare-phpbb.sh $PHPBB_BRANCH
   - cd ../../phpBB3
   - travis/prepare-extension.sh $EXTNAME $PHPBB_BRANCH
   - travis/setup-phpbb.sh $DB $TRAVIS_PHP_VERSION $NOTESTS
@@ -53,6 +56,7 @@ install:
 
 before_script:
   - travis/setup-database.sh $DB $TRAVIS_PHP_VERSION $NOTESTS
+  - phantomjs --webdriver=8910 > /dev/null &
 
 script:
   - sh -c "if [ '$SNIFF' != '0' ]; then travis/ext-sniff.sh $DB $TRAVIS_PHP_VERSION $EXTNAME $NOTESTS; fi"
