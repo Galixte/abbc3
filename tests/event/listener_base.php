@@ -24,8 +24,8 @@ class listener_base extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \phpbb\controller\helper|\PHPUnit_Framework_MockObject_MockObject */
-	protected $controller_helper;
+	/** @var \phpbb\routing\helper|\PHPUnit_Framework_MockObject_MockObject */
+	protected $helper;
 
 	/** @var \vse\abbc3\event\listener */
 	protected $listener;
@@ -35,9 +35,6 @@ class listener_base extends \phpbb_test_case
 
 	/** @var \phpbb\user */
 	protected $user;
-
-	/** @var string */
-	protected $ext_root_path;
 
 	/** @var string */
 	protected $bbvideo_width;
@@ -58,28 +55,32 @@ class listener_base extends \phpbb_test_case
 		$this->bbcodes_help = $this->getMockBuilder('\vse\abbc3\core\bbcodes_help')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->config = new \phpbb\config\config(array('enable_mod_rewrite' => '0'));
+		$this->config = new \phpbb\config\config([
+			'enable_mod_rewrite' => '0',
+			'abbc3_icons_type' => 'png',
+			'abbc3_bbcode_bar' => 1,
+			'abbc3_pipes' => 1,
+		]);
 
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 		$this->user = $this->getMockBuilder('\phpbb\user')
-			->setConstructorArgs(array(
+			->setConstructorArgs([
 				new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
 				'\phpbb\datetime'
-			))
+			])
 			->getMock();
 		$this->user->data['username'] = 'admin';
 
-		$this->controller_helper = $this->getMockBuilder('\phpbb\controller\helper')
+		$this->helper = $this->getMockBuilder('\phpbb\routing\helper')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->controller_helper->expects($this->atMost(3))
+		$this->helper->expects(self::atMost(3))
 			->method('route')
-			->willReturnCallback(function ($route, array $params = array()) {
+			->willReturnCallback(function ($route, array $params = []) {
 				return $route . '#' . serialize($params);
 			});
 
-		$this->ext_root_path = 'ext/vse/abbc3/';
 		$this->bbvideo_width = 560;
 		$this->bbvideo_height = 315;
 	}
@@ -93,10 +94,10 @@ class listener_base extends \phpbb_test_case
 			$this->bbcodes_config,
 			$this->bbcodes_display,
 			$this->bbcodes_help,
-			$this->controller_helper,
+			$this->config,
+			$this->helper,
 			$this->template,
-			$this->user,
-			$this->ext_root_path
+			$this->user
 		);
 	}
 }
